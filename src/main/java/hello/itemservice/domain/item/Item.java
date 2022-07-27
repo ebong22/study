@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 public class Item {
 
     private Long id;
+
     @NotBlank // 빈값 + 공백만있는 경우를 허용하지 않음
     private String itemName;
 
