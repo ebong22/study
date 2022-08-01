@@ -2,17 +2,21 @@ package hello.itemservice.domain.item;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.ScriptAssert;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
+//scriptAssert보단 이런 처리는 그냥 메소드에서 해주는게 바람직
+//@ScriptAssert(lang="javascript", script = "_this.price * _this.quantity <= 10000")
 public class Item {
 
     private Long id;
 
-    @NotBlank // 빈값 + 공백만있는 경우를 허용하지 않음
+    // 빈값 + 공백만있는 경우를 허용하지 않음
+    @NotBlank(message="공백은 입력할 수 없습니다.")
     private String itemName;
 
     @NotNull
