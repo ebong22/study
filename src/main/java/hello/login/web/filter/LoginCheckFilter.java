@@ -15,7 +15,7 @@ import java.net.http.HttpResponse;
 @Slf4j
 public class LoginCheckFilter implements Filter {
 
-    private static final String[] whiteList = {"/", "/members/add", "/login", "/logout", "/css/*"};
+    private static final String[] whiteList = {"/", "/members/add", "/login", "/logout", "/css/*", "/*.ico"};
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
