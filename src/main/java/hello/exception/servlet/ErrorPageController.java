@@ -1,22 +1,28 @@
 package hello.exception.servlet;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Controller
 public class ErrorPageController {
     //RequestDispatcher 상수로 정의되어 있음
-    public static final String ERROR_EXCEPTION      = "javax.servlet.error.exception";
+    public static final String ERROR_EXCEPTION = "javax.servlet.error.exception";
     public static final String ERROR_EXCEPTION_TYPE = "javax.servlet.error.exception_type";
-    public static final String ERROR_MESSAGE        = "javax.servlet.error.message";
-    public static final String ERROR_REQUEST_URI    = "javax.servlet.error.request_uri";
-    public static final String ERROR_SERVLET_NAME   = "javax.servlet.error.servlet_name";
-    public static final String ERROR_STATUS_CODE    = "javax.servlet.error.status_code";
+    public static final String ERROR_MESSAGE = "javax.servlet.error.message";
+    public static final String ERROR_REQUEST_URI = "javax.servlet.error.request_uri";
+    public static final String ERROR_SERVLET_NAME = "javax.servlet.error.servlet_name";
+    public static final String ERROR_STATUS_CODE = "javax.servlet.error.status_code";
 
     // Get, Post 한번에 처리해주려고 RequestMapping
     @RequestMapping("/error-page/404")
@@ -35,7 +41,22 @@ public class ErrorPageController {
         return "error-page/500";
     }
 
+    @RequestMapping(value = "/error-page/500", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String, Object>> errorPage500Api(HttpServletRequest request, HttpServletResponse response) {
+
+        log.info("API errorPAge 500");
+
+        Map<String, Object> result = new HashMap<>();
+        Exception ex = (Exception) request.getAttribute(ERROR_EXCEPTION);
+        result.put("status", request.getAttribute(ERROR_STATUS_CODE));
+        result.put("message", ex.getMessage());
+
+        Integer stastusCode = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+        return new ResponseEntity(result, HttpStatus.valueOf(stastusCode));
+    }
+
     private void printErrorInfo(HttpServletRequest request) {
+
         // was는 오류페이지를 단순히 다시 요청하는 것 뿐만 아니라 오류정보를 request의 attribute 추가해서 넘겨줌
         // 필요하면 오류페이지에서 전달된 오류정보를 사용할 수 있음
         //예외
