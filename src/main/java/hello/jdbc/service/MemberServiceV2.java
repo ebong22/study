@@ -20,14 +20,17 @@ public class MemberServiceV2 {
     public void accountTransfer(String fromId, String toId, int money) throws SQLException {
 
         Connection con = dataSource.getConnection();
+
         try {
-            con.setAutoCommit(false); // 트랜잭션 시작
+            con.setAutoCommit(false); //트랜잭션 시작
 
             //비즈니스 로직
             bizLogic(con, fromId, toId, money);
-            con.commit(); // 성공 시 커밋
+
+            con.commit(); //성공시 커밋
         } catch (Exception e) {
-            con.rollback(); // 실패 시 록백
+            log.info("rollback");
+            con.rollback(); //실패시 롤백
             throw new IllegalStateException(e);
         } finally {
             release(con);

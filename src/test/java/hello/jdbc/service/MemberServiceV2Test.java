@@ -62,23 +62,24 @@ class MemberServiceV2Test {
     @Test
     @DisplayName("이체 중 예외")
     void accountTransferEx() throws SQLException {
-        // given
+        //given
         Member memberA = new Member("memberA", 10000);
         Member memberEx = new Member("ex", 10000);
         memberRepository.save(memberA);
         memberRepository.save(memberEx);
 
-
-        // when
+        //when
         assertThatThrownBy(() ->
-        memberService.accountTransfer(memberA.getMemberId(), memberEx.getMemberId(), 2000))
+                memberService.accountTransfer(memberA.getMemberId(), memberEx.getMemberId(),
+                        2000))
                 .isInstanceOf(IllegalStateException.class);
 
-
-        // then
+        //then
         Member findMemberA = memberRepository.findById(memberA.getMemberId());
-        Member findMemberEx = memberRepository.findById(memberEx.getMemberId());
+        Member findMemberEx =
+                memberRepository.findById(memberEx.getMemberId());
 
+        //memberA의 돈이 롤백 되어야함
         assertThat(findMemberA.getMoney()).isEqualTo(10000);
         assertThat(findMemberEx.getMoney()).isEqualTo(10000);
     }
