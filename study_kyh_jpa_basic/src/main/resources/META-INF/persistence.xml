@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2"
+             xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+    <persistence-unit name="hello">
+        <properties>
+            <!-- 필수 속성 --> <!-- 접근정보 -->
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+            <property name="javax.persistence.jdbc.user" value="sa"/>
+            <property name="javax.persistence.jdbc.password" value=""/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/test"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+            <!-- H2Dialect : 데이터베이스 방언이라는게 있는데 여기서 H2 데이터베이스를 쓰겠다고 알려주는 것
+                데이터베이스 방언 : 특정 DB에서만 삳용하는 다른 언어 (ex. SQL 표준은 SUBSTRING() ORACLE은 SUBSTR() 이런 식으로 다르게 쓰는것을 방언이라함)
+              -->
+
+            <!--javax.XXX 다른 구현체에서도 사용 가능 / hibernate.XXX hibernate에서 지원하는 것 (다른 구현체에도 비슷한 기능들 있음)-->
+
+            <!-- 옵션 -->
+            <property name="hibernate.show_sql" value="true"/> <!--쿼리 보이게-->
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.use_sql_comments" value="true"/> <!--쿼리 상단에 주석부분 -->
+            <property name="hibernate.jdbc.batch_size" value="10"/> <!--배치 사이즈 옵션 / 이 사이즈만큼 모아서 DB에 한방에 보내고 커밋함 -->
+            <!--<property name="hibernate.hbm2ddl.auto" value="create" />-->
+        </properties>
+    </persistence-unit>
+</persistence>
