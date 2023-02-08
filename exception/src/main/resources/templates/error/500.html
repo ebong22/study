@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+
+    <div class="container" style="max-width: 600px">
+        <div class="py-5 text-center">
+            <h2>500 오류 화면 스프링 부트 제공</h2>
+        </div>
+
+        <div>
+            <p>오류 화면 입니다.</p>
+        </div>
+
+        <ul>
+            <li>오류 정보</li>
+            <p> 오류 정보는 테스트 용으로 확인만 해보는 것이지 실제 서비스에서는 로그에만 찍고 노출시키면 보안에 위험할 수 있음</p>
+            <ul>
+                <li th:text="|timestamp: ${timestamp}|"></li>
+                <li th:text="|path: ${path}|"></li>
+                <li th:text="|status: ${status}|"></li>
+                <li th:text="|message: ${message}|"></li>
+                <li th:text="|error: ${error}|"></li>
+                <li th:text="|exception: ${exception}|"></li>
+                <li th:text="|errors: ${errors}|"></li>
+                <li th:text="|trace: ${trace}|"></li>
+            </ul>
+            </li>
+        </ul>
+
+        <hr class="my-4">
+
+    </div> <!-- /container -->
+
+</body>
+</html>
