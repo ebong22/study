@@ -5,10 +5,16 @@ plugins {
 
 group = 'hello'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+//sourceCompatibility = '17'
 
 repositories {
     mavenCentral()
+}
+
+//war 풀기, 인텔리J 무료버전 필요
+task explodedWar(type: Copy) {
+    into "$buildDir/exploded"
+    with war
 }
 
 dependencies {
